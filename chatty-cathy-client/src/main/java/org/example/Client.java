@@ -6,7 +6,7 @@ import java.net.*;
 public class Client {
     private Socket s = null;
     private DataInputStream in = null;
-    private DataOutputStream out = null;
+    private ObjectOutputStream out = null;
 
 
     public Client(String addr, int port)
@@ -17,7 +17,7 @@ public class Client {
 
             in = new DataInputStream(System.in);
 
-            out = new DataOutputStream(s.getOutputStream());
+            out = new ObjectOutputStream(s.getOutputStream());
         }
         catch (UnknownHostException u) {
             System.out.println(u);
@@ -33,7 +33,8 @@ public class Client {
         while (!m.equals("Over")) {
             try {
                 m = in.readLine();
-                out.writeUTF(m);
+                Message message = new Message(m, "Test Username");
+                out.writeObject(message);
             }
             catch (IOException i) {
                 System.out.println(i);
