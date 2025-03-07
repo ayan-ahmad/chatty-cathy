@@ -1,6 +1,4 @@
 package org.example.commandframework;
-
-import org.example.commandframework.CommandFramework;
 import org.example.commandframework.commands.*;
 
 import java.util.ArrayList;
