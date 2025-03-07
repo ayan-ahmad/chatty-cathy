@@ -50,5 +50,26 @@ class CommandHandlerTest {
         CommandHandler item = new CommandHandler(commandList);
         assertThrows(IllegalArgumentException.class, ()-> item.runCommand("/stub with other info"));
     }
+
+    @Test
+    void duplicateCommandListInput() {
+        Command[] commandListEx = {
+                new StubCommand(),
+                new StubCommand()
+        };
+        assertThrows(IllegalArgumentException.class, ()-> new CommandHandler(commandListEx));
+    }
+
+    @Test
+    void multipleValuesNoDuplicates() {
+        Command[] commandListEx = {
+                new StubCommand(),
+                new Exit()
+        };
+        CommandHandler item = new CommandHandler(commandListEx);
+        String output = item.runCommand("/stub");
+        assertEquals("'/stub' has concluded successfully.", output);
+    }
+
 }
 

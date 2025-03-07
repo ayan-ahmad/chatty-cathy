@@ -16,10 +16,16 @@ public class CommandHandler {
      *                    this is a parameter so that new command types can
      *                    be added without needing to edit this file
      *
+     * @throws IllegalArgumentException if entries are already in hashmap
      */
     public CommandHandler(Command[] commandList) {
         for(Command command : commandList) {
-            commandHashMap.put(command.getName(), command);
+            if (commandHashMap.get(command.getName()) == null) {
+                commandHashMap.put(command.getName(), command);
+            }
+            else {
+                throw new IllegalArgumentException(command.getName() + " is already in use");
+            }
         }
     }
 
