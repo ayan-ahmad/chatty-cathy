@@ -20,8 +20,22 @@ class CommandHandlerTest {
     @Test
     void invalidCommandInput() {
         CommandHandler item = new CommandHandler(commandList);
-        String output = item.runCommand("/Hello");
-        assertEquals("'/Hello' is not a valid command.", output);
+        String exampleOutput = item.runCommand("/Hello");
+        assertEquals("'/Hello' is not a valid command.", exampleOutput);
+    }
+
+    @Test
+    void invalidCommandInputJustChar() {
+        CommandHandler item = new CommandHandler(commandList);
+        String singleCharOutput = item.runCommand("/");
+        assertEquals("'/' is not a valid command.", singleCharOutput);
+    }
+
+    @Test
+    void invalidCommandInputJustCharWithSpace() {
+        CommandHandler item = new CommandHandler(commandList);
+        String charOutputWithSpace = item.runCommand("/ ");
+        assertEquals("'/ ' is not a valid command.", charOutputWithSpace);
     }
 
     @Test
