@@ -1,6 +1,4 @@
 package org.example.commandhandler.commands;
-
-import java.util.Collections;
 import java.util.List;
 
 
@@ -24,14 +22,7 @@ public class Exit implements Command {
      */
     @Override
     public void execute(List<String> parameter) {
-        if (parameter.equals(Collections.emptyList())) {
-            System.exit(0);
-        }
-        else {
-            throw new IllegalArgumentException(
-                    String.format("'%s': Parameters have been input incorrectly.", this.getName())
-            );
-        }
+        System.exit(0);
     }
 }
 
