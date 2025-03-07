@@ -4,54 +4,29 @@ import java.net.*;
 import java.io.*;
 
 public class Server {
-    private Socket s = null;
+
     private ServerSocket ss = null;
-    private DataInputStream in = null;
 
     public Server(int port) {
-
-        try
-        {
+        try {
             ss = new ServerSocket(port);
             System.out.println("Server started");
 
-            System.out.println("Waiting for a client ...");
+            while (true) {
+                System.out.println("Waiting for a client ...");
+                Socket clientSocket = ss.accept();
+                System.out.println("Client accepted");
 
-            s = ss.accept();
-            System.out.println("Client accepted");
-
-            in = new DataInputStream(
-                    new BufferedInputStream(s.getInputStream()));
-
-            String m = "";
-
-            while (!m.equals("Over"))
-            {
-                try
-                {
-                    m = in.readUTF();
-                    System.out.println(m);
-
-                }
-                catch(IOException i)
-                {
-                    System.out.println(i);
-                }
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                Thread thread = new Thread(clientHandler);
+                thread.start();
             }
-            System.out.println("Closing connection");
-
-            s.close();
-            in.close();
-        }
-        catch(IOException i)
-        {
-            System.out.println(i);
+        } catch (IOException e) {
+            System.out.println(e);
         }
     }
 
-    public static void main(String args[])
-    {
+    public static void main(String[] args) {
         Server s = new Server(5000);
     }
 }
-
