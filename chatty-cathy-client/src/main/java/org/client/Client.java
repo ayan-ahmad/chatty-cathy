@@ -13,7 +13,9 @@ public class Client {
         BufferedReader in;
         ObjectOutputStream out;
 
-        try (Socket s = new Socket(addr, port)){
+        Socket s;
+        try {
+            s = new Socket(addr, port);
             System.out.println("Connected");
             in = new BufferedReader(new InputStreamReader(System.in));
             out = new ObjectOutputStream(s.getOutputStream());
@@ -53,6 +55,7 @@ public class Client {
         try {
             in.close();
             out.close();
+            s.close();
         } catch (IOException i) {
             System.out.println(i);
         }

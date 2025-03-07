@@ -14,8 +14,9 @@ public class Server {
     private final List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());
 
     public Server(int port) {
-        try (ServerSocket ss = new ServerSocket(port)){
-
+        ServerSocket ss;
+        try {
+            ss = new ServerSocket(port);
             System.out.println("Server started");
             System.out.println("Waiting for clients");
 
