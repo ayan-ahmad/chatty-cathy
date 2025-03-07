@@ -1,7 +1,6 @@
-package org.example.tests.commandframeworktest;
+package org.example.commandhandler.commands;
 
-import org.example.commandframework.CommandFramework;
-import org.example.commandframework.commands.*;
+import org.example.commandhandler.CommandHandler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -14,7 +13,7 @@ class ExitTest {
 
     @Test
     void validExitWithInvalidParameters() {
-        CommandFramework item = new CommandFramework(commandList);
+        CommandHandler item = new CommandHandler(commandList);
         assertThrows(IllegalArgumentException.class, ()-> item.runCommand("/exit area"));
     }
 

@@ -1,5 +1,5 @@
-package org.example.commandframework;
-import org.example.commandframework.commands.*;
+package org.example.commandhandler;
+import org.example.commandhandler.commands.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Expandable framework for detecting and executing commands based on user input.
  */
-public class CommandFramework {
+public class CommandHandler {
     Command[] commandList;
 
     /**
@@ -20,7 +20,7 @@ public class CommandFramework {
      *                    be added without needing to edit this file
      *
      */
-    public CommandFramework(Command[] commandList) {
+    public CommandHandler(Command[] commandList) {
         this.commandList = commandList;
     }
 
