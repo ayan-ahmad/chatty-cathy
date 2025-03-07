@@ -1,17 +1,14 @@
 package org.example.commandhandler;
 import org.example.commandhandler.commands.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 /**
  * Expandable framework for detecting and executing commands based on user input.
  */
 public class CommandHandler {
-    Command[] commandList;
+    Map<String, Command> commandHashMap = new HashMap<>();
 
     /**
      * Establishes list of valid commands.
@@ -21,7 +18,9 @@ public class CommandHandler {
      *
      */
     public CommandHandler(Command[] commandList) {
-        this.commandList = commandList;
+        for(Command command : commandList) {
+            commandHashMap.put(command.getName(), command);
+        }
     }
 
     /**
@@ -66,13 +65,14 @@ public class CommandHandler {
             String commandName = parseCommandName(userInput);
             List<String> parameter = parseCommandParameters(userInput);
 
-            for (Command command: this.commandList) {
-                if (commandName.equals(command.getName())) {
-                    command.execute(parameter);
-                    return String.format("'%s' has concluded successfully.", userInput);
-                }
+            Command command = commandHashMap.get(commandName); // Returns null if not in hashmap
+            if (command != null) {
+                command.execute(parameter);
+                return String.format("'%s' has concluded successfully.", command.getName());
             }
-            return String.format("'%s' is not a valid command.", userInput);
+            else {
+                return String.format("'%s' is not a valid command.", userInput);
+            }
         }
         return null;
     }
