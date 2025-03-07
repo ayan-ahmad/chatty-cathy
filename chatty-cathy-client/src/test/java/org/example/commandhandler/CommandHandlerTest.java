@@ -11,28 +11,28 @@ class CommandHandlerTest {
     };
 
     @Test
-    void noCommandInputted() {
+    void noCommandInput() {
         CommandHandler item = new CommandHandler(commandList);
         String output = item.runCommand("Hello");
         assertNull(output);
     }
 
     @Test
-    void invalidCommandInputted() {
+    void invalidCommandInput() {
         CommandHandler item = new CommandHandler(commandList);
         String output = item.runCommand("/Hello");
         assertEquals("'/Hello' is not a valid command.", output);
     }
 
     @Test
-    void validCommandInputted() {
+    void validCommandInput() {
         CommandHandler item = new CommandHandler(commandList);
         String output = item.runCommand("/stub");
         assertEquals("'/stub' has concluded successfully.", output);
     }
 
     @Test
-    void validCommandInputtedWithInvalidParameters() {
+    void validCommandInputWithInvalidParameters() {
         CommandHandler item = new CommandHandler(commandList);
         assertThrows(IllegalArgumentException.class, ()-> item.runCommand("/stub with other info"));
     }

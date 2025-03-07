@@ -29,7 +29,7 @@ public class Exit implements Command {
         }
         else {
             throw new IllegalArgumentException(
-                    String.format("'%s' Parameters have been inputted incorrectly.", this.getName())
+                    String.format("'%s': Parameters have been input incorrectly.", this.getName())
             );
         }
     }
