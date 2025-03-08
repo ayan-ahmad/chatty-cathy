@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class with configurations for the websocket connection
  */
 @Configuration
 public class WebSocketClientConfig {

@@ -7,6 +7,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.stereotype.Controller;
 
+/**
+ * Contains endpoints and responses for the websocket
+ */
 @Controller
 @Slf4j
 public class MessageController {
