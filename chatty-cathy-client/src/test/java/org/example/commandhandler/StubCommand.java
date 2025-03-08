@@ -9,6 +9,12 @@ public class StubCommand implements Command {
     public String getName() {
         return "/stub";
     }
+
+    @Override
+    public String getDescription() {
+        return String.format("%s - Stub of a command for testing.", this.getName());
+    }
+
     @Override
     public void execute(List<String> parameter) {
         if (!parameter.equals(Collections.emptyList())) {

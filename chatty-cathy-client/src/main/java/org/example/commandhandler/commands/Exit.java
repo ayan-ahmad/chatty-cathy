@@ -1,6 +1,6 @@
 package org.example.commandhandler.commands;
-import java.util.List;
 
+import java.util.List;
 
 public class Exit implements Command {
     /**
@@ -12,9 +12,17 @@ public class Exit implements Command {
         return "/exit";
     }
 
+    /**
+     * informative message about the commands purpose and how to use it.
+     * @return string describing the command.
+     */
+    @Override
+    public String getDescription() {
+        return String.format("%s - Closes the client.", this.getName());
+    }
 
     /**
-     * This method executes the command, and throws an exception if it fails
+     * This method executes the command, closing the programme.
      *
      * @param parameter is a list of strings,
      *                  representing further inputs that can be used for commands.
