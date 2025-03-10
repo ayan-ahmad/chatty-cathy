@@ -2,6 +2,28 @@
 
 Chatty Cathy is a command line based chat room
 
+## Set Up
+
+Since there are three projects, with three separate POMs, and common is a dependency of the other two, you must build common before anything else.
+
+To do this run `$ mvn clean install` under `common/`
+ 
+In the output it should read something like the following if it works:
+`[INFO] Installing C:\Users\GA\Develop\chatty-cathy\common\pom.xml to C:\Users\GA\.m2\repository\com\chattycathy\common\1.0-SNAPSHOT\common-1.0-SNAPSHOT.pom`
+
+### IntelliJ IDEA
+
+1. Open the `chatty-cathy-common` project (not its parent folder `chatty-cathy`).
+2. On the right hand side press the "m"
+3. Press the terminal logo labelled "Execute Maven Goal"
+4. Type `mvn clean install` and press enter
+
+### Troubleshooting
+ 
+1. Generate Maven Sources
+2. Reload All Maven Projects
+3. Restart your IDE
+
 ## Running
 ### Pre-requisites
 - JDK 21+
