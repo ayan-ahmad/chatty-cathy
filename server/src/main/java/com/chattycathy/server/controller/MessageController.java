@@ -23,7 +23,9 @@ public class MessageController {
     @MessageMapping("/ping")
     @SendTo("/topic/ping")
     public Model ping(Model message) {
-        log.info("<{}>: {}", message.getName(), message.getMessage());
+        if (!message.getMessage().isEmpty()) {
+            log.info("{}", message.getMessage());
+        }
         return new Model("Server", "Welcome to Chatty Cathy!");
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.stereotype.Component;
+import java.util.Scanner;
 
 import java.lang.reflect.Type;
 
@@ -27,12 +28,20 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
         log.info("Connected to WebSocket server");
         log.debug("Connected successfully to session {}, headers: {}", session, connectedHeaders);
+        Scanner s = new Scanner(System.in);
 
         session.subscribe("/topic/ping", this);
 
         Model model = new Model("Client", "Hi Chatty Cathy Server");
 
         session.send("/app/ping", model);
+
+        while (session.isConnected()) {
+            Message message = new Message(s.nextLine());
+            if (!message.getMessage().isEmpty()) {
+                session.send("/app/ping", message);
+            }
+        }
     }
 
     /**
