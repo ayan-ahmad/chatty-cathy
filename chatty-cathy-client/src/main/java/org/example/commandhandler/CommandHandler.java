@@ -18,13 +18,18 @@ public class CommandHandler {
      *
      * @throws IllegalArgumentException if entries are already in hashmap
      */
-    public CommandHandler(Command[] commandList) {
+    public CommandHandler(List<Command> commandList) {
+        commandList.addFirst(new Help(commandList));
+
         for(Command command : commandList) {
             if (commandHashMap.get(command.getName()) == null) {
                 commandHashMap.put(command.getName(), command);
             }
-            else {
+            else if (Objects.equals(command.getName(), "/help")) {
                 throw new IllegalArgumentException(command.getName() + " is already in use");
+            }
+            else {
+                throw new IllegalArgumentException("/help is automatically included in the command list.");
             }
         }
     }

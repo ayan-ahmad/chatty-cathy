@@ -4,22 +4,15 @@ import java.util.List;
 
 public class Help implements Command {
 
-    private final Command[] commandList;
+    private final List<Command> commandList;
 
     /**
      * Defines the list of commands /help describes.
      * @param commandList is the list of command types that will be shown in the /help,
      *                    this is passed in so that it can be customised.
      */
-    public Help(Command[] commandList) {
+    public Help(List<Command> commandList) {
         this.commandList = commandList;
-    }
-
-    /**
-     * Overload for Help, this is so Help() can be displayed within /help.
-     */
-    public Help() {
-        this.commandList = new Command[]{};
     }
 
     /**
@@ -49,7 +42,7 @@ public class Help implements Command {
      */
     @Override
     public void execute(List<String> parameter) {
-        if (this.commandList.length > 0) {
+        if (!this.commandList.isEmpty()) {
             StringBuilder helpInfo = new StringBuilder();
             for (Command command : this.commandList) {
                 helpInfo.append(command.getDescription()).append("\n");
