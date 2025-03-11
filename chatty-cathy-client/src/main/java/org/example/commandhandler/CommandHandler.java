@@ -32,12 +32,12 @@ public class CommandHandler {
                     throw new IllegalArgumentException(command.getName() + " is already in use");
                 }
                 else {
-                    throw new IllegalArgumentException("/help is automatically included in the command list.");
+                    throw new IllegalArgumentException("You must provide at least one command to CommandHandler");
                 }
             }
         }
         else {
-            throw new IllegalArgumentException("You must provide at least one command to CommandHandler");
+            throw new IllegalArgumentException("/help is automatically included in the command list.");
         }
     }
 
