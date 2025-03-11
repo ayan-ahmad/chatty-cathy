@@ -3,12 +3,15 @@ package com.chattycathy.client.handler;
 import com.chattycathy.client.handler.commands.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandHandlerTest {
-    Command[] commandList = {
+    List<Command> commandList = new ArrayList<>(List.of(
             new StubCommand()
-    };
+    ));
 
     @Test
     void noCommandInput() {
@@ -53,19 +56,43 @@ class CommandHandlerTest {
 
     @Test
     void duplicateCommandListInput() {
-        Command[] commandListEx = {
+        List<Command> commandListEx = new ArrayList<>(List.of(
                 new StubCommand(),
                 new StubCommand()
-        };
+        ));
+        assertThrows(IllegalArgumentException.class, ()-> new CommandHandler(commandListEx));
+    }
+
+    @Test
+    void duplicateHelpInput() {
+        List<Command> commandListEx = new ArrayList<>(List.of(
+                new Help(new ArrayList<>()),
+                new StubCommand()
+        ));
+        assertThrows(IllegalArgumentException.class, ()-> new CommandHandler(commandListEx));
+    }
+
+    @Test
+    void emptyCommandListInput() {
+        List<Command> commandListEx = new ArrayList<>();
+        assertThrows(IllegalArgumentException.class, ()-> new CommandHandler(commandListEx));
+    }
+
+    @Test
+    void duplicateHelpListInput() {
+        List<Command> commandListEx = new ArrayList<>(List.of(
+                new StubCommand(),
+                new Help(new ArrayList<>())
+        ));
         assertThrows(IllegalArgumentException.class, ()-> new CommandHandler(commandListEx));
     }
 
     @Test
     void multipleValuesNoDuplicates() {
-        Command[] commandListEx = {
+        List<Command> commandListEx = new ArrayList<>(List.of(
                 new StubCommand(),
                 new Exit()
-        };
+        ));
         CommandHandler item = new CommandHandler(commandListEx);
         String output = item.runCommand("/stub");
         assertEquals("'/stub' has concluded successfully.", output);
