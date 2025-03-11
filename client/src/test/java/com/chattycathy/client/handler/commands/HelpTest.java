@@ -1,7 +1,6 @@
-package org.example.commandhandler.commands;
+package com.chattycathy.client.handler.commands;
 
-import org.example.commandhandler.CommandHandler;
-import org.example.commandhandler.StubCommand;
+import com.chattycathy.client.handler.*;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

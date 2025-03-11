@@ -1,4 +1,4 @@
-package org.example.commandhandler.commands;
+package com.chattycathy.client.handler.commands;
 
 import java.util.List;
 
