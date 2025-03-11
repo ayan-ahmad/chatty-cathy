@@ -42,17 +42,10 @@ public class Help implements Command {
      */
     @Override
     public void execute(List<String> parameter) {
-        if (!this.commandList.isEmpty()) {
-            StringBuilder helpInfo = new StringBuilder();
-            for (Command command : this.commandList) {
-                helpInfo.append(command.getDescription()).append("\n");
-            }
-            System.out.println(helpInfo);
+        StringBuilder helpInfo = new StringBuilder();
+        for (Command command : this.commandList) {
+            helpInfo.append(command.getDescription()).append("\n");
         }
-        else {
-            throw new IllegalArgumentException(
-                    this.getName() + " must receive a list of Command types to display correctly."
-            );
-        }
+        System.out.println(helpInfo);
     }
 }

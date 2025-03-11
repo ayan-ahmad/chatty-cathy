@@ -64,6 +64,21 @@ class CommandHandlerTest {
     }
 
     @Test
+    void duplicateHelpInput() {
+        List<Command> commandListEx = new ArrayList<>(List.of(
+                new Help(new ArrayList<>()),
+                new StubCommand()
+        ));
+        assertThrows(IllegalArgumentException.class, ()-> new CommandHandler(commandListEx));
+    }
+
+    @Test
+    void emptyCommandListInput() {
+        List<Command> commandListEx = new ArrayList<>();
+        assertThrows(IllegalArgumentException.class, ()-> new CommandHandler(commandListEx));
+    }
+
+    @Test
     void duplicateHelpListInput() {
         List<Command> commandListEx = new ArrayList<>(List.of(
                 new StubCommand(),

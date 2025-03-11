@@ -16,21 +16,28 @@ public class CommandHandler {
      *                    this is a parameter so that new command types can
      *                    be added without needing to edit this file
      *
-     * @throws IllegalArgumentException if entries are already in hashmap
+     * @throws IllegalArgumentException if entries are already in hashmap,
+     * if no items are passed into the command list, or if Help specifically is passed in.
+     * as Help is passed in automatically.
      */
     public CommandHandler(List<Command> commandList) {
-        commandList.addFirst(new Help(commandList));
+        if (!commandList.isEmpty()) {
+            commandList.addFirst(new Help(commandList));
 
-        for(Command command : commandList) {
-            if (commandHashMap.get(command.getName()) == null) {
-                commandHashMap.put(command.getName(), command);
+            for(Command command : commandList) {
+                if (commandHashMap.get(command.getName()) == null) {
+                    commandHashMap.put(command.getName(), command);
+                }
+                else if (Objects.equals(command.getName(), "/help")) {
+                    throw new IllegalArgumentException(command.getName() + " is already in use");
+                }
+                else {
+                    throw new IllegalArgumentException("/help is automatically included in the command list.");
+                }
             }
-            else if (Objects.equals(command.getName(), "/help")) {
-                throw new IllegalArgumentException(command.getName() + " is already in use");
-            }
-            else {
-                throw new IllegalArgumentException("/help is automatically included in the command list.");
-            }
+        }
+        else {
+            throw new IllegalArgumentException("You must provide at least one command to CommandHandler");
         }
     }
 
