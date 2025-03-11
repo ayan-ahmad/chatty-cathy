@@ -9,8 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import java.util.Scanner;
-
 @SpringBootApplication
 @Slf4j
 @Getter

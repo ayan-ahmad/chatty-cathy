@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Scanner;
 
+/**
+ * Handles the input from the user to connect to the server
+ */
 @Slf4j
 public class ServerInputHandler {
 
@@ -30,6 +33,9 @@ public class ServerInputHandler {
         return url;
     }
 
+    /**
+     * Connects to the server using the WebSocket URL provided by the user
+     */
     public void connectToServer() {
 
         String url = getConsoleInput();
@@ -48,6 +54,5 @@ public class ServerInputHandler {
         }
 
     }
-
 
 }
