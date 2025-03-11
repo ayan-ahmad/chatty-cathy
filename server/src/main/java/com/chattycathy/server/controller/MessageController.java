@@ -1,5 +1,6 @@
 package com.chattycathy.server.controller;
 
+import com.chattycathy.server.model.Message;
 import com.chattycathy.server.model.Model;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,12 +21,12 @@ public class MessageController {
      * @see com.chattycathy.server.config.WebSocketConfig#configureMessageBroker(MessageBrokerRegistry)
      * WebSocketConfig.configureMessageBroker contains the config/routing for this endpoint
      */
-    @MessageMapping("/ping")
-    @SendTo("/topic/ping")
-    public Model ping(Model message) {
+    @MessageMapping("/main")
+    @SendTo("/topic/main")
+    public Message main(Message message) {
         if (!message.getMessage().isEmpty()) {
-            log.info("{}", message.getMessage());
+            return new Message(message.getMessage());
         }
-        return new Model("Server", "Welcome to Chatty Cathy!");
+        return new Message();
     }
 }
