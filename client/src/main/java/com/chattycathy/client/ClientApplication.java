@@ -21,9 +21,12 @@ public class ClientApplication implements CommandLineRunner {
 
 	private final ClientStompSessionHandler sessionHandler;
 
-	public ClientApplication(WebSocketStompClient stompClient, ClientStompSessionHandler sessionHandler) {
+	private final Scanner scanner;
+
+	public ClientApplication(WebSocketStompClient stompClient, ClientStompSessionHandler sessionHandler, Scanner scanner) {
 		this.stompClient = stompClient;
 		this.sessionHandler = sessionHandler;
+		this.scanner = scanner;
 	}
 
 	public static void main(String[] args) {
@@ -36,7 +39,7 @@ public class ClientApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) {
-		sessionHandler.setUser(new User(new Scanner(System.in)));
+		sessionHandler.setUser(new User(scanner));
 		new ServerInputHandler(this).connectToServer();
 	}
 }
