@@ -25,39 +25,28 @@ class ServerInputHandlerTest {
         serverInputHandler = new ServerInputHandler(clientApplication);
     }
 
-    @Test
-    void testConnectToServerWithValidUrl() {
-        String validUrl = "ws://localhost:8080/ws";
+    private void testConnectToServer(String inputUrl, String expectedUrl) {
         Scanner scanner = mock(Scanner.class);
-        when(scanner.nextLine()).thenReturn(validUrl);
+        when(scanner.nextLine()).thenReturn(inputUrl);
 
         serverInputHandler.setScanner(scanner);
         serverInputHandler.connectToServer();
 
-        verify(stompClient, times(1)).connectAsync(eq(validUrl), any());
+        verify(stompClient, times(1)).connectAsync(eq(expectedUrl), any());
+    }
+
+    @Test
+    void testConnectToServerWithValidUrl() {
+        testConnectToServer("ws://localhost:8080/ws", "ws://localhost:8080/ws");
     }
 
     @Test
     void testConnectToServerWithEmptyUrl() {
-        String defaultUrl = "ws://localhost:8080/ws";
-        Scanner scanner = mock(Scanner.class);
-        when(scanner.nextLine()).thenReturn("");
-
-        serverInputHandler.setScanner(scanner);
-        serverInputHandler.connectToServer();
-
-        verify(stompClient, times(1)).connectAsync(eq(defaultUrl), any());
+        testConnectToServer("", "ws://localhost:8080/ws");
     }
 
     @Test
     void testConnectToServerWithInvalidUrl() {
-        String invalidUrl = "invalid-url";
-        Scanner scanner = mock(Scanner.class);
-        when(scanner.nextLine()).thenReturn(invalidUrl);
-
-        serverInputHandler.setScanner(scanner);
-        serverInputHandler.connectToServer();
-
-        verify(stompClient, times(1)).connectAsync(eq(invalidUrl), any());
+        testConnectToServer("invalid-url", "invalid-url");
     }
 }

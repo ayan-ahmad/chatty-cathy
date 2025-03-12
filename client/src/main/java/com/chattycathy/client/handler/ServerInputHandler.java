@@ -6,13 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Scanner;
 
 /**
- * Handles the input from the user to connect to the server
+ * Handles the input from the user to connect to a server that they can specify or else connect to a default server
  */
 @Slf4j
 public class ServerInputHandler {
 
     private final ClientApplication clientApplication;
     private Scanner scanner;
+    private static final String DEFAULT_URL = "ws://localhost:8080/ws";
 
     public ServerInputHandler(ClientApplication clientApplication) {
         this.clientApplication = clientApplication;
@@ -27,14 +28,16 @@ public class ServerInputHandler {
         log.info("Enter the WebSocket URL: ");
         String url = scanner.nextLine();
         if (url.isEmpty()) {
-            url = "ws://localhost:8080/ws";
-            log.warn("No URL provided, using default: {}", url);
+            url = DEFAULT_URL;
+            log.warn("No URL provided, using default: {}", DEFAULT_URL);
         }
         return url;
     }
 
     /**
      * Connects to the server using the WebSocket URL provided by the user
+     * @exception NullPointerException if the URL provided is invalid
+     * Exceptions are also handled if the stomp client returns a throwable error
      */
     public void connectToServer() {
 
