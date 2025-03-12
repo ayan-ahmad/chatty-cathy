@@ -24,9 +24,6 @@ public class MessageController {
     @MessageMapping("/main")
     @SendTo("/topic/main")
     public Message main(Message message) {
-        if (!message.getMessage().isEmpty()) {
-            return new Message(message.getMessage());
-        }
-        return new Message();
+        return message;
     }
 }

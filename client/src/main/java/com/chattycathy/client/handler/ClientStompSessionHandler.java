@@ -31,16 +31,19 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         log.info("Connected to Chatty Cathy");
         log.debug("Connected successfully to session {}, headers: {}", session, connectedHeaders);
         log.info("Please type to chat!");
-        Scanner scanner = new Scanner(System.in);
 
         session.subscribe("/topic/main", this);
 
-        while (session.isConnected()) {
-            Message message = new Message(scanner.nextLine());
-            if (!message.getMessage().isEmpty()) {
-                session.send("/app/ping", message);
+        new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
+            while (session.isConnected()) {
+                Message message = new Message(scanner.nextLine());
+                if (!message.getMessage().isEmpty()) {
+                    session.send("/app/main", message);
+                }
             }
-        }
+            scanner.close();
+        }).start();
     }
 
     /**
