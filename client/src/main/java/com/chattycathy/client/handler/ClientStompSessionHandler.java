@@ -68,7 +68,7 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     @Override
     public void handleFrame(StompHeaders headers, @Nullable Object payload) {
         if (payload instanceof Message message) {
-            log.info("{}", message.getMessage());
+            log.info("{}: {}",message.getUserName(), message.getMessage());
         }
     }
 
