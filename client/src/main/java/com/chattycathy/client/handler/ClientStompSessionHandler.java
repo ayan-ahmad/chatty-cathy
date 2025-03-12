@@ -36,12 +36,7 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
 
-            log.info("Please enter a username: ");
-
-            String userName;
-            do {
-                userName = scanner.nextLine();
-            } while (userName.isEmpty());
+            String userName = getUserName(scanner);
 
             log.info("Please type to chat!");
             while (session.isConnected()) {
@@ -52,6 +47,17 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
             }
             scanner.close();
         }).start();
+    }
+
+    private String getUserName(Scanner scanner) {
+        String userName;
+
+        do {
+            log.info("Please enter a username: ");
+            userName = scanner.nextLine();
+        } while (userName.isEmpty());
+
+        return userName;
     }
 
     /**
