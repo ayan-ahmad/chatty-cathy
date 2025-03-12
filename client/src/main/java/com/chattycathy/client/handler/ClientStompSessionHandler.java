@@ -1,6 +1,6 @@
 package com.chattycathy.client.handler;
 
-import com.chattycathy.client.model.Model;
+import com.chattycathy.client.model.Message;
 import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.stereotype.Component;
+import java.util.Scanner;
 
 import java.lang.reflect.Type;
 
@@ -22,17 +23,26 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
 
     /**
      * A custom implementation that runs after connecting that subscribes to the needed events
+     * and handles message sending
      */
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-        log.info("Connected to WebSocket server");
+        log.info("Connected to Chatty Cathy");
         log.debug("Connected successfully to session {}, headers: {}", session, connectedHeaders);
+        log.info("Please type to chat!");
 
-        session.subscribe("/topic/ping", this);
+        session.subscribe("/topic/main", this);
 
-        Model model = new Model("Client", "Hi Chatty Cathy Server");
-
-        session.send("/app/ping", model);
+        new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
+            while (session.isConnected()) {
+                Message message = new Message(scanner.nextLine());
+                if (!message.getMessage().isEmpty()) {
+                    session.send("/app/main", message);
+                }
+            }
+            scanner.close();
+        }).start();
     }
 
     /**
@@ -48,8 +58,8 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
      */
     @Override
     public void handleFrame(StompHeaders headers, @Nullable Object payload) {
-        if (payload instanceof Model model) {
-            log.info("<{}>: {}", model.getName(), model.getMessage());
+        if (payload instanceof Message message) {
+            log.info("{}", message.getMessage());
         }
     }
 
@@ -58,6 +68,6 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
      */
     @Override
     public Type getPayloadType(StompHeaders headers) {
-        return Model.class;
+        return Message.class;
     }
 }
