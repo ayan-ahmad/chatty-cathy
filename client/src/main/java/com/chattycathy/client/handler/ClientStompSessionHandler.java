@@ -38,12 +38,11 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
         log.info("Connected to Chatty Cathy");
         log.debug("Connected successfully to session {}, headers: {}", session, connectedHeaders);
-
+        log.info("Please type to chat!");
 
         session.subscribe("/topic/main", this);
 
         new Thread(() -> {
-            log.info("Please type to chat!");
             while (session.isConnected()) {
                 Message message = new Message(user.getUserName(), scanner.nextLine());
                 if (!message.getMessage().isEmpty()) {
