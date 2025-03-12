@@ -4,6 +4,7 @@ import com.chattycathy.client.model.Message;
 import com.chattycathy.client.model.User;
 import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -21,6 +22,8 @@ import java.lang.reflect.Type;
 @Component
 @Slf4j
 public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
+    @Setter
+    User user;
 
     /**
      * A custom implementation that runs after connecting that subscribes to the needed events
@@ -36,8 +39,6 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
 
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
-
-            User user = new User(scanner);
 
             log.info("Please type to chat!");
             while (session.isConnected()) {
