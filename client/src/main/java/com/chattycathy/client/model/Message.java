@@ -11,5 +11,6 @@ import lombok.Setter;
 @Getter // Provides getters for all attributes
 @Setter // Provides setters for all attributes
 public class Message {
+    private String userName;
     private String message;
 }

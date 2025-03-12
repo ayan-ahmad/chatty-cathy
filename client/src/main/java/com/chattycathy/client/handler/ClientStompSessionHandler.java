@@ -36,7 +36,7 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
             while (session.isConnected()) {
-                Message message = new Message(scanner.nextLine());
+                Message message = new Message("username", scanner.nextLine());
                 if (!message.getMessage().isEmpty()) {
                     session.send("/app/main", message);
                 }
