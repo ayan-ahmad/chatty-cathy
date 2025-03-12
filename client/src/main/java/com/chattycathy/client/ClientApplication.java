@@ -30,6 +30,10 @@ public class ClientApplication implements CommandLineRunner {
 		SpringApplication.run(ClientApplication.class, args);
 	}
 
+	/**
+	 * Gets username and starts server
+	 * @param args incoming main method arguments
+	 */
 	@Override
 	public void run(String... args) {
 		sessionHandler.setUser(new User(new Scanner(System.in)));
