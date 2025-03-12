@@ -25,6 +25,11 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     @Setter
     User user;
 
+    Scanner scanner;
+
+    public ClientStompSessionHandler(Scanner scanner) {
+        this.scanner = scanner;
+    }
     /**
      * A custom implementation that runs after connecting that subscribes to the needed events
      * and handles message sending
@@ -38,8 +43,6 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         session.subscribe("/topic/main", this);
 
         new Thread(() -> {
-            Scanner scanner = new Scanner(System.in);
-
             log.info("Please type to chat!");
             while (session.isConnected()) {
                 Message message = new Message(user.getUserName(), scanner.nextLine());

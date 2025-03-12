@@ -59,7 +59,7 @@ public class WebSocketClientConfig {
      */
     @Bean
     public StompSessionHandler stompSessionHandler() {
-        return new ClientStompSessionHandler();
+        return new ClientStompSessionHandler(consoleInputScanner());
     }
 
     /**
