@@ -1,7 +1,6 @@
 package com.chattycathy.client.handler;
 
 import com.chattycathy.client.model.Message;
-import com.chattycathy.client.model.Model;
 import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +68,6 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
      */
     @Override
     public Type getPayloadType(StompHeaders headers) {
-        return Model.class;
+        return Message.class;
     }
 }
