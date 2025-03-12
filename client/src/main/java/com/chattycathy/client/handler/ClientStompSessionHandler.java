@@ -1,6 +1,7 @@
 package com.chattycathy.client.handler;
 
 import com.chattycathy.client.model.Message;
+import com.chattycathy.client.model.User;
 import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
 import lombok.extern.slf4j.Slf4j;
@@ -36,28 +37,17 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
 
-            String userName = getUserName(scanner);
+            User user = new User(scanner);
 
             log.info("Please type to chat!");
             while (session.isConnected()) {
-                Message message = new Message(userName, scanner.nextLine());
+                Message message = new Message(user.getUserName(), scanner.nextLine());
                 if (!message.getMessage().isEmpty()) {
                     session.send("/app/main", message);
                 }
             }
             scanner.close();
         }).start();
-    }
-
-    private String getUserName(Scanner scanner) {
-        String userName;
-
-        do {
-            log.info("Please enter a username: ");
-            userName = scanner.nextLine();
-        } while (userName.isEmpty());
-
-        return userName;
     }
 
     /**
