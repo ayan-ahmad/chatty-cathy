@@ -15,6 +15,7 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class with configurations for the websocket connection
@@ -58,6 +59,14 @@ public class WebSocketClientConfig {
      */
     @Bean
     public StompSessionHandler stompSessionHandler() {
-        return new ClientStompSessionHandler();
+        return new ClientStompSessionHandler(consoleInputScanner());
+    }
+
+    /**
+     * @return reusable instance of scanner which reads from console.
+     */
+    @Bean
+    public Scanner consoleInputScanner() {
+        return new Scanner(System.in);
     }
 }

@@ -1,8 +1,10 @@
 package com.chattycathy.client.handler;
 
 import com.chattycathy.client.model.Message;
+import com.chattycathy.client.model.User;
 import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -20,7 +22,14 @@ import java.lang.reflect.Type;
 @Component
 @Slf4j
 public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
+    @Setter
+    User user;
 
+    Scanner scanner;
+
+    public ClientStompSessionHandler(Scanner scanner) {
+        this.scanner = scanner;
+    }
     /**
      * A custom implementation that runs after connecting that subscribes to the needed events
      * and handles message sending
@@ -34,9 +43,8 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         session.subscribe("/topic/main", this);
 
         new Thread(() -> {
-            Scanner scanner = new Scanner(System.in);
             while (session.isConnected()) {
-                Message message = new Message(scanner.nextLine());
+                Message message = new Message(user.getUserName(), scanner.nextLine());
                 if (!message.getMessage().isEmpty()) {
                     session.send("/app/main", message);
                 }
@@ -59,7 +67,7 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     @Override
     public void handleFrame(StompHeaders headers, @Nullable Object payload) {
         if (payload instanceof Message message) {
-            log.info("{}", message.getMessage());
+            log.info("{}: {}",message.getUserName(), message.getMessage());
         }
     }
 

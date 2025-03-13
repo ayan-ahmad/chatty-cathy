@@ -17,7 +17,7 @@ public class ServerInputHandler {
 
     public ServerInputHandler(ClientApplication clientApplication) {
         this.clientApplication = clientApplication;
-        this.scanner = new Scanner(System.in);
+        this.scanner = clientApplication.getScanner();
     }
 
     public void setScanner(Scanner scanner) {
