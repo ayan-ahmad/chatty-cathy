@@ -22,11 +22,15 @@ class HelpTest {
         String output = item.runCommand("/help");
 
         String expectedOutput =
+                "Valid Commands:\n" +
                 "/help - Returns information on each command.\n" +
-                "/stub - Stub of a command for testing.\n" +
+                "/stub - Stub of a command for testing." +
                 System.lineSeparator();
 
-        assertEquals(expectedOutput, outputStream.toString());
+        // removes log info as it changes based one time ran.
+        String actualOutputParsed = outputStream.toString().split(" -- ")[1];
+
+        assertEquals(expectedOutput, actualOutputParsed);
         assertEquals("'/help' has concluded successfully.", output);
     }
 }

@@ -1,7 +1,9 @@
 package com.chattycathy.client.handler.commands;
 
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
+@Slf4j
 public class Help implements Command {
 
     private final List<Command> commandList;
@@ -38,14 +40,15 @@ public class Help implements Command {
      * @param parameter is a list of strings,
      *                  representing further inputs that can be used for commands.
      *                  for this command parameter should be null
-     * @throws IllegalArgumentException if the dev tries to execute without adding items to display.
      */
     @Override
     public void execute(List<String> parameter) {
         StringBuilder helpInfo = new StringBuilder();
+        helpInfo.append("Valid Commands:\n");
         for (Command command : this.commandList) {
             helpInfo.append(command.getDescription()).append("\n");
         }
-        System.out.println(helpInfo);
+        helpInfo.delete(helpInfo.length() - 1, helpInfo.length()); // removes last newline
+        log.info(helpInfo.toString());
     }
 }
