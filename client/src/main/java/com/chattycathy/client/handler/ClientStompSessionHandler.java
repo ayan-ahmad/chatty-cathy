@@ -13,7 +13,6 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,6 +33,7 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     public ClientStompSessionHandler(Scanner scanner) {
         this.scanner = scanner;
     }
+
     /**
      * A custom implementation that runs after connecting that subscribes to the needed events
      * and handles message sending
@@ -49,36 +49,23 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         session.subscribe("/topic/main", this);
 
         new Thread(() -> {
-
-            List<Command> commandList = getComandList();
+            List<Command> commandList = CommandList.getCommandList();
             CommandHandler commandHandler = new CommandHandler(commandList);
-            String commandReturn;
 
             while (session.isConnected()) {
                 Message message = new Message(user.getUserName(), scanner.nextLine());
-                commandReturn = commandHandler.runCommand(message.getMessage());
+                String commandReturn = commandHandler.runCommand(message.getMessage());
 
-                if (!message.getMessage().isEmpty() && commandReturn == null) {
-                    session.send("/app/main", message);
-                } else if (commandReturn != null) {
+                if (commandReturn != null) {
                     log.info(commandReturn);
+                }
+                else if (!message.getMessage().isEmpty()) {
+                    session.send("/app/main", message);
                 }
             }
             scanner.close();
         }).start();
     }
-
-
-    /**
-     * This method returns a list of valid commands for the runtime of the programme.
-     * @return List of valid commands.
-     */
-    private List<Command> getComandList() {
-        return new ArrayList<>(List.of(
-                new Exit()
-        ));
-    }
-
 
     /**
      * A custom implementation that handles errors when the payload converts
