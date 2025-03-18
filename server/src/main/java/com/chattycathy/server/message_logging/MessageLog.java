@@ -1,22 +1,26 @@
 package com.chattycathy.server.message_logging;
 
 import com.chattycathy.server.model.Message;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 @Slf4j
+@AllArgsConstructor
 public class MessageLog {
 
+    /**
+     * holds path to message log file
+     */
     String messageLogPath;
 
-    public MessageLog(String messageLogPath) {
-        this.messageLogPath = messageLogPath;
-    }
-
+    /**
+     * Appends a message to log file
+     * @param message message logged
+     */
     public void logMessage(Message message) {
-
         try {
             FileWriter fileWriter = new FileWriter(messageLogPath, true);
 

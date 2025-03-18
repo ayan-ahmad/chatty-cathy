@@ -20,7 +20,8 @@ public class MessageController {
     MessageLog messageLog;
 
     /**
-     * @param message This is the message that is sent by a client and received on server-side
+     * Logs then returns and sends a message to all clients
+     * @param message This is the message that is sent by a client and logged then received on server-side
      * @return We return a message of our choice, since this is an app destination this will be sent to everyone
      * @see com.chattycathy.server.config.WebSocketConfig#configureMessageBroker(MessageBrokerRegistry)
      * WebSocketConfig.configureMessageBroker contains the config/routing for this endpoint
