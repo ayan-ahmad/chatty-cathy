@@ -1,7 +1,7 @@
 package com.chattycathy.server.controller;
 
 import com.chattycathy.server.model.Message;
-import com.chattycathy.server.model.MessageLog;
+import com.chattycathy.server.message_logging.MessageLog;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;

@@ -1,5 +1,6 @@
-package com.chattycathy.server.model;
+package com.chattycathy.server.message_logging;
 
+import com.chattycathy.server.model.Message;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileWriter;
@@ -7,6 +8,7 @@ import java.io.IOException;
 
 @Slf4j
 public class MessageLog {
+
     String messageLogPath;
 
     public MessageLog(String messageLogPath) {

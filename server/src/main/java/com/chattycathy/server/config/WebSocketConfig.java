@@ -1,6 +1,6 @@
 package com.chattycathy.server.config;
 
-import com.chattycathy.server.model.MessageLog;
+import com.chattycathy.server.message_logging.MessageLog;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
