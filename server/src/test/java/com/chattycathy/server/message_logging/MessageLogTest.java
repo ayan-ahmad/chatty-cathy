@@ -1,6 +1,7 @@
 package com.chattycathy.server.message_logging;
 
 import com.chattycathy.server.model.Message;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +20,8 @@ class MessageLogTest {
     MessageLog messageLog;
 
     @BeforeEach
+    @AfterEach
     void setUp() {
-
-
         try {
             FileWriter fileWriter = new FileWriter(messageLogPath);
 
@@ -34,6 +34,7 @@ class MessageLogTest {
 
         messageLog = new MessageLog(messageLogPath);
     }
+
     @Test
     void logNormalMessage() {
         String userName = "bella";
