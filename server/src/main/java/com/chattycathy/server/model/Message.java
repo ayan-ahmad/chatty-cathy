@@ -13,4 +13,8 @@ import lombok.Setter;
 public class Message {
     private String userName;
     private String message;
+
+    public String toString() {
+        return getUserName() + ": " + getMessage();
+    }
 }

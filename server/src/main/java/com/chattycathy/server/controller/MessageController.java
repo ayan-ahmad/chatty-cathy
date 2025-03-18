@@ -1,7 +1,8 @@
 package com.chattycathy.server.controller;
 
 import com.chattycathy.server.model.Message;
-import com.chattycathy.server.model.Model;
+import com.chattycathy.server.model.MessageLog;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -13,7 +14,10 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class MessageController {
+
+    MessageLog messageLog;
 
     /**
      * @param message This is the message that is sent by a client and received on server-side
@@ -24,6 +28,8 @@ public class MessageController {
     @MessageMapping("/main")
     @SendTo("/topic/main")
     public Message main(Message message) {
+        messageLog.logMessage(message);
+
         return message;
     }
 }

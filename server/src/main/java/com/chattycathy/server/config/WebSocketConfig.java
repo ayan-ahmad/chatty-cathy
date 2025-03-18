@@ -1,5 +1,6 @@
 package com.chattycathy.server.config;
 
+import com.chattycathy.server.model.MessageLog;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
@@ -50,4 +51,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         return new MappingJackson2MessageConverter(objectMapper);
     }
 
+    /**
+     * @return message log that stores log in main/resources
+     */
+    @Bean
+    public MessageLog messageLog() {
+        return new MessageLog("src/main/resources/messages.log");
+    }
 }
