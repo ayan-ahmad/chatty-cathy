@@ -1,6 +1,5 @@
 package com.chattycathy.client.handler;
 
-import com.chattycathy.client.handler.commands.*;
 import com.chattycathy.client.model.Message;
 import com.chattycathy.client.model.User;
 import io.micrometer.common.lang.NonNullApi;
@@ -13,7 +12,6 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Scanner;
 
 import java.lang.reflect.Type;
@@ -30,8 +28,11 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
 
     Scanner scanner;
 
-    public ClientStompSessionHandler(Scanner scanner) {
+    CommandHandler commandHandler;
+
+    public ClientStompSessionHandler(Scanner scanner, CommandHandler commandHandler) {
         this.scanner = scanner;
+        this.commandHandler = commandHandler;
     }
 
     /**
@@ -49,9 +50,6 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         session.subscribe("/topic/main", this);
 
         new Thread(() -> {
-            List<Command> commandList = CommandList.getCommandList();
-            CommandHandler commandHandler = new CommandHandler(commandList);
-
             while (session.isConnected()) {
                 Message message = new Message(user.getUserName(), scanner.nextLine());
                 String commandReturn = commandHandler.runCommand(message.getMessage());

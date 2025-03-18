@@ -1,6 +1,8 @@
 package com.chattycathy.client.config;
 
 import com.chattycathy.client.handler.ClientStompSessionHandler;
+import com.chattycathy.client.handler.CommandHandler;
+import com.chattycathy.client.handler.CommandList;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
@@ -59,7 +61,7 @@ public class WebSocketClientConfig {
      */
     @Bean
     public StompSessionHandler stompSessionHandler() {
-        return new ClientStompSessionHandler(consoleInputScanner());
+        return new ClientStompSessionHandler(consoleInputScanner(), commandHandler());
     }
 
     /**
@@ -68,5 +70,14 @@ public class WebSocketClientConfig {
     @Bean
     public Scanner consoleInputScanner() {
         return new Scanner(System.in);
+    }
+
+
+    /**
+     * @return returns a command handler with list of commands
+     */
+    @Bean
+    public CommandHandler commandHandler() {
+        return new CommandHandler(CommandList.getCommandList());
     }
 }
