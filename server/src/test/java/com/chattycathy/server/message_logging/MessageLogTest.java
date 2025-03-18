@@ -42,7 +42,6 @@ class MessageLogTest {
 
         Message message = new Message(userName, content);
 
-
         messageLog.logMessage(message);
 
         assertMessagesLogged(List.of(message));
