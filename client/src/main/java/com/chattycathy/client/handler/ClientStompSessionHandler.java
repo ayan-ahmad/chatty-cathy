@@ -42,6 +42,14 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
 
         session.subscribe("/topic/main", this);
 
+        session.send("/app/user-join", user.getUserName());
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            if (session.isConnected()) {
+                session.send("/app/user-leave", user.getUserName());
+            }
+        }));
+
         new Thread(() -> {
             while (session.isConnected()) {
                 Message message = new Message(user.getUserName(), scanner.nextLine());
