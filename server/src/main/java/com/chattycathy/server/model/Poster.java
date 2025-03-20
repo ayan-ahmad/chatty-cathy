@@ -31,6 +31,20 @@ public class Poster {
     )
     Set<Post> posts = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name="Follows",
+            joinColumns=@JoinColumn(name="follower"),
+            inverseJoinColumns=@JoinColumn(name="followed")
+    )
+    private Set<Poster> following = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name="Follows",
+            joinColumns=@JoinColumn(name="followed"),
+            inverseJoinColumns=@JoinColumn(name="follower")
+    )
+    private Set<Poster> followedBy = new HashSet<>();
+
     public Poster(String userName) {
         this.userName = userName;
     }
