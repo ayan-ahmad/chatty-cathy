@@ -7,13 +7,25 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+/**
+ * Provides convenient access to sessionFactory
+ */
 @Slf4j
 public class HibernateUtil {
+    /**
+     * Hides public constructor for entirely static class
+     */
     private HibernateUtil() {}
 
     private static StandardServiceRegistry registry;
+
     private static SessionFactory sessionFactory;
 
+    /**
+     * creates and maintains sessionFactory singleton.
+     * Singleton is used as only one instance of sessionFactory should exist
+     * @return sessionFactory which can be used to get instances of session.
+     */
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {

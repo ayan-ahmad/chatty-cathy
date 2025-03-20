@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Used to hold poster data
+ */
 @NoArgsConstructor
 @Getter
 @Setter
