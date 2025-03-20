@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.stereotype.Component;
+
 import java.util.Scanner;
 
 import java.lang.reflect.Type;
@@ -27,17 +28,23 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
 
     Scanner scanner;
 
-    public ClientStompSessionHandler(Scanner scanner) {
+    CommandHandler commandHandler;
+
+    public ClientStompSessionHandler(Scanner scanner, CommandHandler commandHandler) {
         this.scanner = scanner;
+        this.commandHandler = commandHandler;
     }
+
     /**
      * A custom implementation that runs after connecting that subscribes to the needed events
      * and handles message sending
+     * Also checks if user message is a command, handling it if so.
      */
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
         log.info("Connected to Chatty Cathy");
         log.debug("Connected successfully to session {}, headers: {}", session, connectedHeaders);
+        log.info("Type '/help' to See The List of Available Commands");
         log.info("Please type to chat!");
 
         session.subscribe("/topic/main", this);
@@ -53,7 +60,12 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         new Thread(() -> {
             while (session.isConnected()) {
                 Message message = new Message(user.getUserName(), scanner.nextLine());
-                if (!message.getMessage().isEmpty()) {
+                String commandReturn = commandHandler.runCommand(message.getMessage());
+
+                if (commandReturn != null) {
+                    log.info(commandReturn);
+                }
+                else if (!message.getMessage().isEmpty()) {
                     session.send("/app/main", message);
                 }
             }
