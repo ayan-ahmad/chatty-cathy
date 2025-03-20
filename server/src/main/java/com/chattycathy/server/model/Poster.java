@@ -1,18 +1,16 @@
 package com.chattycathy.server.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "User")
-public class User {
+@Table(name = "Poster")
+public class Poster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +19,8 @@ public class User {
 
     @Column(name = "userName")
     private String userName;
+
+    public Poster(String userName) {
+        this.userName = userName;
+    }
 }
