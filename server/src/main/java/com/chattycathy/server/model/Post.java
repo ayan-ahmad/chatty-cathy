@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -21,4 +24,7 @@ public class Post {
 
     @Column(name = "content")
     private String content;
+
+    @ManyToMany(mappedBy = "posts")
+    private Set<Poster> employees = new HashSet<>();
 }
