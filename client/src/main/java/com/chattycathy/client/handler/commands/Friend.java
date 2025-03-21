@@ -37,7 +37,7 @@ public class Friend implements Command {
      */
     @Override
     public void execute(List<String> parameter) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("src/main/resources/friendsList.csv", true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("src/main/resources/friendsList.txt", true))) {
             writer.println(parameter.getFirst());
         } catch (IOException e) {
             e.printStackTrace();
