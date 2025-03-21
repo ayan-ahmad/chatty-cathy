@@ -12,6 +12,10 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 import java.lang.reflect.Type;
@@ -29,10 +33,40 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     Scanner scanner;
 
     CommandHandler commandHandler;
+    ArrayList<String> friendList;
+
+    private enum Colour {
+        RESET("\033[0m"),
+        GREEN_BOLD("\033[1;32m");
+        private final String code;
+
+        Colour(String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String toString() {
+            return code;
+        }
+    }
 
     public ClientStompSessionHandler(Scanner scanner, CommandHandler commandHandler) {
         this.scanner = scanner;
         this.commandHandler = commandHandler;
+        this.friendList = new ArrayList<String>();
+
+        try {
+            File myObj = new File("src/main/resources/friendsList.txt");
+            Scanner reader = new Scanner(myObj);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                friendList.add(data);
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -64,6 +98,9 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
 
                 if (commandReturn != null) {
                     log.info(commandReturn);
+                    if (Objects.equals(commandReturn.split(" ")[0], "'/friend'")) {
+                        friendList.add(message.getMessage().split(" ")[1]);
+                    }
                 }
                 else if (!message.getMessage().isEmpty()) {
                     session.send("/app/main", message);
@@ -87,7 +124,12 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     @Override
     public void handleFrame(StompHeaders headers, @Nullable Object payload) {
         if (payload instanceof Message message) {
-            log.info("{}: {}",message.getUserName(), message.getMessage());
+            if (friendList.contains(message.getUserName())) {
+                log.info(Colour.GREEN_BOLD + "{}: " + Colour.RESET + "{}",message.getUserName(), message.getMessage());
+            }
+            else {
+                log.info("{}: {}", message.getUserName(), message.getMessage());
+            }
         }
     }
 
