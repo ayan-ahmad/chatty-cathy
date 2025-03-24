@@ -45,17 +45,9 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         log.info("Connected to Chatty Cathy");
         log.debug("Connected successfully to session {}, headers: {}", session, connectedHeaders);
         log.info("Type '/help' to See The List of Available Commands");
-        log.info("Please type to chat!");
+        log.info("Type to create a post for your followers");
 
         session.subscribe("/topic/main", this);
-
-        session.send("/app/user-join", user.getUserName());
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (session.isConnected()) {
-                session.send("/app/user-leave", user.getUserName());
-            }
-        }));
 
         new Thread(() -> {
             while (session.isConnected()) {
