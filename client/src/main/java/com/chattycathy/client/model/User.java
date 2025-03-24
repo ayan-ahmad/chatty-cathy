@@ -21,6 +21,30 @@ public class User {
         do {
             log.info("Please enter a username: ");
             userName = scanner.nextLine();
-        } while (userName.isEmpty());
+        } while (!validateUserName());
+    }
+
+    /**
+     * Checks and informs user if their selected username is invalid
+     * @return True or false depending on if the users input is valid
+     */
+    private boolean validateUserName() {
+        if (userName.isEmpty()) {
+            // No log needed here are the default message already describes the issue.
+            return false;
+        }
+        if (userName.length() > 30) {
+            log.info("Username must be 30 or less characters");
+            return false;
+        }
+        if (userName.contains(" ")) {
+            log.info("Username cannot contain spaces");
+            return false;
+        }
+        if (userName.toLowerCase().contains("server")) {
+            log.info("Username cannot be 'server'");
+            return false;
+        }
+        return true;
     }
 }
