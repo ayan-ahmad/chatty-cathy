@@ -36,24 +36,4 @@ public class MessageController {
 
         return message;
     }
-
-    /**
-     * @param username This is the username of the client which is sent for the server to use in a message
-     * @return We return a joining message which is sent to all connected users
-     */
-    @MessageMapping("/user-join")
-    @SendTo("/topic/main")
-    public Message userJoin(String username) {
-        return new Message("Server", username + " joined the chat");
-    }
-
-    /**
-     * @param username This is the username of the client which is sent for the server to use in a message
-     * @return We return a leaving message which is sent to all users that are still connected
-     */
-    @MessageMapping("/user-leave")
-    @SendTo("/topic/main")
-    public Message userLeave(String username) {
-        return new Message("Server", username + " left the chat");
-    }
 }
