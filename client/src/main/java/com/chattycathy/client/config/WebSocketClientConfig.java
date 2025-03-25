@@ -3,8 +3,6 @@ package com.chattycathy.client.config;
 import com.chattycathy.client.handler.ClientStompSessionHandler;
 import com.chattycathy.client.handler.CommandHandler;
 import com.chattycathy.client.handler.CommandList;
-import com.chattycathy.client.handler.commands.Friend;
-import com.chattycathy.client.model.FriendList;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
