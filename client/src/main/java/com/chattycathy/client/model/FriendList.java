@@ -11,7 +11,7 @@ public class FriendList {
     public FriendList() {
         this.friendList = new ArrayList<String>();
         try {
-            File list = new File("src/main/resources/friendsList.txt");
+            File list = new File("src/main/resources/followingList.txt");
             Scanner reader = new Scanner(list);
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();

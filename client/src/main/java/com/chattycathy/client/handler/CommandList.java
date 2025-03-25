@@ -2,7 +2,7 @@ package com.chattycathy.client.handler;
 
 import com.chattycathy.client.handler.commands.Command;
 import com.chattycathy.client.handler.commands.Exit;
-import com.chattycathy.client.handler.commands.Friend;
+import com.chattycathy.client.handler.commands.Follow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class CommandList {
      */
     public static List<Command> getCommandList() {
         return new ArrayList<>(List.of(
-                new Friend(),
+                new Follow(),
                 new Exit()
         ));
     }

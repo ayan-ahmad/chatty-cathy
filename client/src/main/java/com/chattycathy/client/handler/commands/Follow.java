@@ -1,14 +1,12 @@
 package com.chattycathy.client.handler.commands;
 
-import com.chattycathy.client.model.User;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class Friend implements Command {
-    public Friend() {
+public class Follow implements Command {
+    public Follow() {
     }
 
     /**
@@ -17,7 +15,7 @@ public class Friend implements Command {
      */
     @Override
     public String getName() {
-        return "/friend";
+        return "/follow";
     }
 
     /**
@@ -26,7 +24,7 @@ public class Friend implements Command {
      */
     @Override
     public String getDescription() {
-        return String.format("%s @[username]- Adds [username] to friends list", this.getName());
+        return String.format("%s @[username]- Adds [username] to follow list", this.getName());
     }
 
     /**
@@ -37,7 +35,7 @@ public class Friend implements Command {
      */
     @Override
     public void execute(List<String> parameter) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("src/main/resources/friendsList.txt", true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("src/main/resources/followingList.csv", true))) {
             writer.println(parameter.getFirst());
         } catch (IOException e) {
             e.printStackTrace();

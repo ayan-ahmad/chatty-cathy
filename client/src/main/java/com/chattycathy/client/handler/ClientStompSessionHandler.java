@@ -59,7 +59,7 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
         this.scanner = scanner;
         this.commandHandler = commandHandler;
         FriendList friends = new FriendList();
-        this.friendList = new ArrayList<String>();
+        this.friendList = friends.getFriendsList();
 
 
     }
