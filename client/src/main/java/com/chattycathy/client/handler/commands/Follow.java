@@ -24,7 +24,7 @@ public class Follow implements Command {
      */
     @Override
     public String getDescription() {
-        return String.format("%s @[username]- Adds [username] to friends list", this.getName());
+        return String.format("%s @[username]- Adds [username] to follow list", this.getName());
     }
 
     /**

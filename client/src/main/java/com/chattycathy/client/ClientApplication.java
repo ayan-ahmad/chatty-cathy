@@ -24,6 +24,7 @@ public class ClientApplication implements CommandLineRunner {
 	private final Scanner scanner;
 
 	public ClientApplication(WebSocketStompClient stompClient, ClientStompSessionHandler sessionHandler, Scanner scanner) {
+
 		this.stompClient = stompClient;
 		this.sessionHandler = sessionHandler;
 		this.scanner = scanner;
@@ -38,8 +39,9 @@ public class ClientApplication implements CommandLineRunner {
 	 * @param args incoming main method arguments
 	 */
 	@Override
-	public void run(String... args) {
+	public void run(String... args) throws InterruptedException {
 		sessionHandler.setUser(new User(scanner));
 		new ServerInputHandler(this).connectToServer();
+		Thread.currentThread().join(); // Ensures the main thread doesn't close without the run thread completing
 	}
 }
