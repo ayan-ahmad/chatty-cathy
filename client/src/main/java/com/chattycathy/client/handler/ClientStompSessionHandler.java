@@ -1,5 +1,6 @@
 package com.chattycathy.client.handler;
 
+import com.chattycathy.client.model.FriendList;
 import com.chattycathy.client.model.Message;
 import com.chattycathy.client.model.User;
 import io.micrometer.common.lang.NonNullApi;
@@ -35,6 +36,10 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     CommandHandler commandHandler;
     ArrayList<String> friendList;
 
+    /**
+     * A custom enum which adds codes to implement text styling in CLI
+     */
+
     private enum Colour {
         RESET("\033[0m"),
         GREEN_BOLD("\033[1;32m");
@@ -53,20 +58,10 @@ public class ClientStompSessionHandler extends StompSessionHandlerAdapter {
     public ClientStompSessionHandler(Scanner scanner, CommandHandler commandHandler) {
         this.scanner = scanner;
         this.commandHandler = commandHandler;
+        FriendList friends = new FriendList();
         this.friendList = new ArrayList<String>();
 
-        try {
-            File myObj = new File("src/main/resources/friendsList.txt");
-            Scanner reader = new Scanner(myObj);
-            while (reader.hasNextLine()) {
-                String data = reader.nextLine();
-                friendList.add(data);
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+
     }
 
     /**

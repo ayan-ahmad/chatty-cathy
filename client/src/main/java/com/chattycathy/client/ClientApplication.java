@@ -24,6 +24,7 @@ public class ClientApplication implements CommandLineRunner {
 	private final Scanner scanner;
 
 	public ClientApplication(WebSocketStompClient stompClient, ClientStompSessionHandler sessionHandler, Scanner scanner) {
+
 		this.stompClient = stompClient;
 		this.sessionHandler = sessionHandler;
 		this.scanner = scanner;
